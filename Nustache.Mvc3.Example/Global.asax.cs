@@ -1,6 +1,9 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Nustache.Core;
 using Nustache.Mvc;
 
 namespace Nustache.Mvc3.Example
@@ -37,14 +40,20 @@ namespace Nustache.Mvc3.Example
 
         public static void RegisterViewEngines(ViewEngineCollection engines)
         {
+            Helpers.Register("link", LinkHelper);
             engines.RemoveAt(0);
-            engines.Add(new NustacheViewEngine
-                            {
-                                // Comment out this line to require Model in front of all your expressions.
-                                // This makes it easier to share templates between the client and server.
-                                // But it also means that ViewData/ViewBag is inaccessible.
-                                RootContext = NustacheViewEngineRootContext.Model
-                            });
+            engines.Add(new NustacheViewEngine(fileExtensions: new[] {"mustache", "handlebars"}, additionalLocations: new[] {"~/_templates/*"})
+            {
+                // Comment out this line to require Model in front of all your expressions.
+                // This makes it easier to share templates between the client and server.
+                // But it also means that ViewData/ViewBag is inaccessible.
+                RootContext = NustacheViewEngineRootContext.Model
+            });
+        }
+
+        private static void LinkHelper(RenderContext context, IList<object> arguments, IDictionary<string, object> options, RenderBlock fn, RenderBlock inverse)
+        {
+            context.Write(string.Format("<a href=\"{1}\">{0}</a>", arguments[0], arguments[1]));
         }
     }
 }

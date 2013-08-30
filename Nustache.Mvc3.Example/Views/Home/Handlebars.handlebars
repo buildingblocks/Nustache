@@ -1,0 +1,87 @@
+{{<Title}}Nustache MVC View Engine Handlebars Test{{/Title}}
+
+<h2>{{title}}</h2>
+<hr>
+
+<p>.-separated paths: {{article.title}}</p>
+<hr>
+
+<div>
+	<h3>Context object &ndash; using #with without with</h3>
+	{{#article}}
+		<p>{{title}}</p>
+	{{/article}}
+</div>
+<hr>
+
+<div>
+	<h3>#with block helper</h3>
+	{{#with article}}
+		<h4>Title: {{title}}</h4>
+		<p>Intro: {{intro}}</p>
+	{{/with}}
+</div>
+<hr>
+
+<div>
+	<h3>#each block helper</h3>
+	{{#each articles}}
+		<h4>Title: {{subject}}</h4>
+		<p>Body: {{body}}</p>
+	{{/each}}
+</div>
+<hr>
+
+<div>
+	<h3>#if block helper</h3>
+	{{#if thing}}
+		<p>Thing (boolean &ndash; true)</p>
+	{{/if}}
+
+	{{#if otherthing}}
+		<p>OtherThing (boolean &ndash; false)</p>
+	{{/if}}
+
+	{{#if title}}
+		<p>Title (string &ndash; truthy)</p>
+	{{/if}}
+
+	{{#if articles}}
+		<p>Articles (enumerable &ndash; truthy)</p>
+	{{/if}}
+
+	{{#if randomproperty}}
+		<p>RandomProperty (non-existent property)</p>
+	{{else}}
+		<p>RandomProperty doesn't exist (else helper)</p>
+	{{/if}}
+</div>
+<hr>
+
+<div>
+	<h3>#unless block helper</h3>
+	{{#unless thing}}
+		<p>Thing (boolean &ndash; true)</p>
+	{{/unless}}
+
+	{{#unless otherthing}}
+		<p>OtherThing (boolean &ndash; false)</p>
+	{{/unless}}
+</div>
+<hr>
+
+<div>
+	<h3>Partials</h3>
+	{{#article}}
+		{{>HandlebarsPartial}}
+	{{/article}}
+</div>
+<hr>
+
+<p>Link simple helper: {{{link text url}}}</p>
+<hr>
+
+
+
+{{<Section}}
+{{/Section}}
